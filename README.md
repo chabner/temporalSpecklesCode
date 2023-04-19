@@ -47,13 +47,13 @@ addpath(genpath('/path/to/temporalSpecklesCode'))
 
 The compiled code contains two main functions for generating spatio-temporal speckle patterns:
 
-1. sstmc3D: Use this function to generate speckle patterns in 3D scenes.
+1. `sstmc3D`: Use this function to generate speckle patterns in 3D scenes.
 
-2. sstmc2D: Use this function to generate speckle patterns in 2D scenes.
+2. `sstmc2D`: Use this function to generate speckle patterns in 2D scenes.
 
 To use either function, call it with the required input configuration. The input configuration is detailed in the function documentation.
 
-In 3D scenes, we typically refer to x, y, and z coordinates, whereas in 2D scenes, we usually use x and y coordinates in a similar manner.
+In 3D scenes, we typically refer to `x`, `y`, and `z` coordinates, whereas in 2D scenes, we usually use `x` and `y` coordinates in a similar manner.
 
 <a name="config"></a>
 ## Code configuration
