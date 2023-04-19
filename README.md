@@ -346,7 +346,7 @@ The `seed` parameter is an optional field of integer type. Its default value is 
 config.tracer.isCBS
 ```
 
-The `isCBS` parameter is an optional field of bool type, which defaults to `false`. Coherent back scattering (CBS) considers reverse paths, but it also consumes additional computation time. To activate CBS, set isCBS to `true`. You can refer to the `mudiffCBSValidation2D` example for additional information.
+The `isCBS` parameter is an optional field of bool type, which defaults to `false`. Coherent back scattering (CBS) considers reverse paths, but it also consumes additional computation time. To activate CBS, set `isCBS` to `true`. You can refer to the `mudiffCBSValidation2D` example for additional information.
 
 <a name="exe"></a>
 ## Program execution
