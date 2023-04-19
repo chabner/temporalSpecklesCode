@@ -2,13 +2,28 @@
 
 Spatio-temporal Monte Carlo speckle statistics and field simulator is a next-event estimation path tracing simulation for rendering spatio-temporal speckle statistics and fields, accelerated on GPU and written in CUDA.
 
-1. [ Prerequisites. ](#desc)
-2. [ Usage tips. ](#usage)
+## Table of context
 
+1. [ Prerequisites. ](#prereq)
+2. [ Installation. ](#inst)
+3. [ Prerequisites. ](#prereq)
+4. [ Usage. ](#usage)
+5. [Code configuration.](#config)
+    1. [Simulator.](#sim)
+    2. [Medium.](#med)
+    3. [Scattering.](#scat)
+    4. [Source.](#source)
+    5. [Sampler.](#sampler)
+    6. [Tracer.](#tracer)
+6. [Program execution.](#exe)
+7. [References.](#ref)
+
+<a name="prereq"></a>
 ## Prerequisites
 
 The package requires MATLAB R2022a or later and CUDA toolkit 11.6 or later. You can download MATLAB from [MathWorks](https://www.mathworks.com/products/matlab.html), and CUDA toolkit from [NVIDIA](https://developer.nvidia.com/cuda-toolkit). In addition, cuBLAS library is required to compile the code. This library is a part of the CUDA toolkit, but you may need to add its library to MATLAB compiler path. Please refer to the "-L" option in [MATLAB mex](https://www.mathworks.com/help/matlab/ref/mex.html#btw17rw-1-option1optionN) compiler.
 
+<a name="inst"></a>
 ## Installation
 
 To install the package, follow these steps:
@@ -27,6 +42,7 @@ This will compile the required code files.
 addpath(genpath('/path/to/temporalSpecklesCode'))
 ```
 
+<a name="usage"></a>
 ## Usage
 
 The compiled code contains two main functions for generating spatio-temporal speckle patterns:
@@ -39,9 +55,11 @@ To use either function, call it with the required input configuration. The input
 
 In 3D scenes, we typically refer to x, y, and z coordinates, whereas in 2D scenes, we usually use x and y coordinates in a similar manner.
 
+<a name="config"></a>
 ## Code configuration
 In this section, we provide instructions on how to configure the code.
 
+<a name="sim"></a>
 ### Simulator
 
 To adjust the number of rendered concurrent paths, you can modify the following fields in the `config.simulation` structure:
@@ -76,6 +94,7 @@ config.simulation.lambda
 
 This is an optional field that accepts a float type value. The default value is 1.0, which corresponds to the wavelength. You can adjust this value to simulate speckles with different wavelengths.
 
+<a name="med"></a>
 ### Medium
 
 In the following section, we will provide instructions on how to configurate `config.medium`, the medium in the simulator representing the physical environment through which the light propagates.
@@ -127,6 +146,7 @@ config.medium.siga
 
 This field is optional, and the default value is a vector of `M` zeros. It defines the absorption coefficient for each material, requiring `M` elements, where each element is a positive floating number larger than 0.
 
+<a name="scat"></a>
 ### Scattering
     
 The scattering of light is defined by the type and amplitude function of the medium. In this section, we provide instructions on how to configure `config.scattering`, the scattering parameters.
@@ -176,6 +196,7 @@ config.scattering.amplitudeFunction{1} = 'vMF';
 
 von Mises-Fisher mixture scattering requires a struct with the fields `mixtureMu`, `mixtureC`, and `mixtureAlpha`. Each field is a vector of floating numbers that defines the mixture of von Mises-Fisher functions. Examples of von Mises-Fisher mixtures can be found in `confocalRenderings`.
 
+<a name="source"></a>
 ### Source
 The source is a fundamental component of the scene in the simulator, as it represents the light source that illuminates the object being simulated and the camera which collecting the scattered light in the observed scene. The type and properties of the source, such as its position, direction, and aperture, can have a significant impact on the resulting speckle pattern or image. Therefore, accurately defining the source is critical for generating realistic and accurate simulations.
 
@@ -276,6 +297,7 @@ This is a required field that defines the standard deviation of the Gaussian-sha
 
 See the example `speckleRenderings` for examples of different source types.
 
+<a name="sampler"></a>
 ### Sampler
 The sampler `config.sampler` defines the simulation algorithm type and parameters.
 
@@ -303,6 +325,7 @@ config.sampler.U.z
 
 Each coordinate is a vector of `M` floating-point values that defines the linear motion parameter for the corresponding material.
 
+<a name="tracer"></a>
 ### Tracer
 
 The role of the tracer `config.tracer` in the simulation is to simulate the propagation of light through the scene. It tracks the path of the photons as they interact with the materials in the scene, and calculates the intensity and other properties of the resulting light. 
@@ -325,6 +348,7 @@ config.tracer.isCBS
 
 The `isCBS` parameter is an optional field of bool type, which defaults to `false`. Coherent back scattering (CBS) considers reverse paths, but it also consumes additional computation time. To activate CBS, set isCBS to `true`. You can refer to the `mudiffCBSValidation2D` example for additional information.
 
+<a name="exe"></a>
 ## Program execution
 Once the configuration is set up, the code is executed in the following manner. For a 2D configuration, run the following command:
 
@@ -348,6 +372,7 @@ config.simulation.batchSize * config.simulation.fullIteration + missPaths
 
 Where `missPaths` represents the number of paths that are missing the volume and contribute a value of 0 to the result. The result can be normalized according to `iter`, where the speckle field should be normalized according to the square root of `iter`, and speckle correlation is normalized according to `iter`.
 
+<a name="ref"></a>
 ## References
 Monte Carlo algorithm for far-field sources and sensors.
 
